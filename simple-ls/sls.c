@@ -12,10 +12,10 @@ char *reslove_d_type(unsigned char raw_type) {
     if (raw_type == DT_LNK) {
         return "simlink  ";
     }
-    return "unknown";
+    return "unknown  ";
 }
 
-void print_files(const char *dir_name) {
+void print_directory(const char *dir_name) {
     DIR *dir = opendir(dir_name);
     if (dir == NULL) {
         printf("Failed to open directory: %s\n", dir_name);
@@ -24,8 +24,8 @@ void print_files(const char *dir_name) {
     dir_entity = readdir(dir);
     while (dir_entity != NULL) {
         unsigned char raw_type = dir_entity->d_type;
-        char *type = reslove_d_type(raw_type);
         char *name = dir_entity->d_name;
+        char *type = reslove_d_type(raw_type);
         printf("%s\t%s\n", type, name);
         dir_entity = readdir(dir);
     }
@@ -33,9 +33,9 @@ void print_files(const char *dir_name) {
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
-        print_files(".");
+        print_directory(".");
         return 0;
     }
-    print_files(argv[1]);
+    print_directory(argv[1]);
     return 0;
 }
