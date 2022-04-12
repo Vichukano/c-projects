@@ -1,16 +1,25 @@
 #ifndef LIST_H_SENTRY
 #define LIST_H_SENTRY
-#define INIT_SIZE 32
 
-typedef struct array_list {
-    int size;
-    int *elements;
-} array_list;
+typedef union val {
+    int int_value;
+    long long_value;
+    double double_value;
+} val;
 
-array_list new_array_list();
+typedef struct List {
+    val value;
+    struct List *next;
+} List;
 
-int get(int index, array_list *list);
+List *push_list(List *list, val value);
 
-void add(int element, array_list *list);
+List *pop_list(List *list);
+
+List *new_list(val value);
+
+void free_list(List *list);
+
+void print_list(List *list);
 
 #endif
